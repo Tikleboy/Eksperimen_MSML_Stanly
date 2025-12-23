@@ -1,0 +1,31 @@
+name: KAI Data Preprocessing Automation
+
+on: [push]
+
+jobs:
+  run-preprocessing:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      - name: Install Dependencies
+        run: |
+          pip install -r preprocessing/requirements.txt
+
+      - name: Run Automate Script
+        run: |
+          cd preprocessing
+          python automate_Stanlylopez.py
+
+      - name: Upload Clean Data
+        uses: actions/upload-artifact@v4
+        with:
+          name: clean-dataset-result
+          path: preprocessing/data_clean/ulasan_KAI_preprocessing.csv
